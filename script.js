@@ -137,7 +137,7 @@ function calculateCarbonFootprint(kilometersDriven, energyConsumed) {
 
 
 
-document.querySelector("#submit").addEventListener("click", () => {
+document.querySelector("#submitC").addEventListener("click", () => {
   const car = Number(document.querySelector("#car").value)
   const public = Number(document.querySelector("#public").value)
   const energy = Number(document.querySelector("#energy").value)
