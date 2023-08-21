@@ -70,51 +70,78 @@ modalText = document.querySelector("#modalText");
 var modal = document.getElementById("myModal");
 var span = document.getElementsByClassName("close")[0];
 
-function calculate(){
- 
-  if(age.value=='' || height.value=='' || weight.value=='' || (male.checked==false && female.checked==false)){
+function calculate() {
+
+  if (age.value == '' || height.value == '' || weight.value == '' || (male.checked == false && female.checked == false)) {
     modal.style.display = "block";
     modalText.innerHTML = `All fields are required!`;
 
-  }else{
+  } else {
     countBmi();
   }
 
 }
 
-function countBmi(){
+function countBmi() {
   var p = [age.value, height.value, weight.value];
-  if(male.checked){
+  if (male.checked) {
     p.push("male");
-  }else if(female.checked){
+  } else if (female.checked) {
     p.push("female");
   }
 
-  var bmi = Number(p[2])/(Number(p[1])/100*Number(p[1])/100);
+  var bmi = Number(p[2]) / (Number(p[1]) / 100 * Number(p[1]) / 100);
   var result = '';
-  if(bmi<18.5){
+  if (bmi < 18.5) {
     result = 'Underweight';
-     }else if(18.5<=bmi&&bmi<=24.9){
+  } else if (18.5 <= bmi && bmi <= 24.9) {
     result = 'Healthy';
-     }else if(25<=bmi&&bmi<=29.9){
+  } else if (25 <= bmi && bmi <= 29.9) {
     result = 'Overweight';
-     }else if(30<=bmi&&bmi<=34.9){
+  } else if (30 <= bmi && bmi <= 34.9) {
     result = 'Obese';
-     }else if(35<=bmi){
+  } else if (35 <= bmi) {
     result = 'Extremely obese';
-     }
+  }
 
-resultArea.style.display = "block";
-document.querySelector(".comment").innerHTML = `You are <span id="comment">${result}</span>`;
-document.querySelector("#result").innerHTML = bmi.toFixed(2);
+  resultArea.style.display = "block";
+  document.querySelector(".comment").innerHTML = `You are <span id="comment">${result}</span>`;
+  document.querySelector("#result").innerHTML = bmi.toFixed(2);
 
 }
 
-span.onclick = function() {
+span.onclick = function () {
   modal.style.display = "none";
 }
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
 }
+
+// Function to calculate carbon footprint
+function calculateCarbonFootprint(kilometersDriven, energyConsumed) {
+  // Constants for emissions factors (in kg CO2 per unit)
+  const EMISSIONS_PER_KM = 0.257;  // Average car emissions (converted from miles to km)
+  const EMISSIONS_PER_KWH = 0.527; // Average electricity emissions
+
+  // Calculate emissions from transportation and energy consumption
+  const transportationEmissions = kilometersDriven * EMISSIONS_PER_KM;
+  const energyEmissions = energyConsumed * EMISSIONS_PER_KWH;
+
+  // Total carbon footprint
+  const totalCarbonFootprint = transportationEmissions + energyEmissions;
+
+  return totalCarbonFootprint;
+}
+
+
+
+document.querySelector("#submit").addEventListener("click", () => {
+  const car = Number(document.querySelector("#car").value)
+  const public = Number(document.querySelector("#public").value)
+  const energy = Number(document.querySelector("#energy").value)
+  const carbonFootprint = calculateCarbonFootprint(car + public, energy);
+  console.log(`Your carbon footprint is ${carbonFootprint.toFixed(2)} kg CO2.`);
+  document.querySelector("#result").innerText = carbonFootprint.toFixed(2);
+})

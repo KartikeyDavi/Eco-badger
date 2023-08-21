@@ -1,6 +1,4 @@
-const car = document.querySelector("#car").value
-const public = document.querySelector("#public").value
-const energy = document.querySelector("#energy").value
+
 
 // Function to calculate carbon footprint
 function calculateCarbonFootprint(kilometersDriven, energyConsumed) {
